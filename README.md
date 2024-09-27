@@ -1,5 +1,10 @@
-# IT INNO HACK
+<h1 align="center">IT INNO HACK</h1>
+
+![Ubuntu](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=ubuntu&logoColor=white) ![ClickHouse](https://img.shields.io/badge/ClickHouse-FFFAFA?style=for-the-badge&logo=ClickHouse&logoColor=yellow) ![YandexCloud](https://img.shields.io/badge/YandexCloud-FF0000?style=for-the-badge&logo=Yandex&logoColor=FF0000)  ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+
+
 ## Команда: Есть идея, но нет пруфов
+
 ## Документация
 
 ### Диаграмма архитектуры
