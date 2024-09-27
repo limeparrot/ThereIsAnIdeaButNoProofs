@@ -1,2 +1,9 @@
-# ThereIsAnIdeaButNoProofs
-IT INNO HACK
+### IT INNO HACK
+## Команда Есть идея, но нет пруфов
+
+## Документация
+
+# Диаграмма архитектуры
+
+
+ 
