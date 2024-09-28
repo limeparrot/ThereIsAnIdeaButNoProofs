@@ -20,15 +20,15 @@
 ### Инструкция по сборке решения
 Установка 
 ```bash
-docker build -t solution
+test
 ```
 Клонирование репозитория
 ```bash
-git clone https://github.com/limeparrot/ThereIsAnIdeaButNoProofs.git
+git clone test
 ```
 Запуск docker-compose
 ```bash
-docker-compose up
+test
 ```
 
 ### Описание работы кода
