@@ -16,28 +16,37 @@ TableWorker::TableWorker(const Config &config){
 
 std::vector <std::wstring> TableWorker::get_normalized_mails(const std::string &tableName,
                                                const std::string &columnName) {
-    ClickhouseManager clickhouseManager;
-    std::vector <std::wstring> mailsList = clickhouseManager.get_string(config,tableName,columnName);
+    std::vector <std::wstring> mailsList = ClickhouseManager::get_string(config,tableName,columnName);
     for (auto& mail : mailsList){
-        remove_bad_symbols(mail);
-        find_mail_struct(mail);
+        normalize_mail(mail);
     }
     return mailsList;
 }
 
 std::vector <std::wstring> TableWorker::get_normalized_phone_numbers(const std::string &tableName,
-                                                               const std::string &columName) {
-    return {};
+                                                               const std::string &columnName) {
+    std::vector <std::wstring> phoneNumberList = ClickhouseManager::get_string(config,tableName,columnName);
+    for (auto& phone : phoneNumberList){
+        normalize_phone(phone);
+    }
+    return phoneNumberList;
 }
 
 std::vector <std::wstring> TableWorker::get_normalized_birth_dates(const std::string &tableName,
                                                                    const std::string &columnName) {
+    std::vector <std::wstring> birthDatesList = ClickhouseManager::get_string(config,tableName,columnName);
+
     return {};
 }
 
 std::vector <std::wstring> TableWorker::get_normalized_names(const std::string &tableName,
                                                              const std::string &columnName) {
-    return {};
+    std::vector <std::wstring> allNames = ClickhouseManager::get_string(config,tableName,columnName);
+    std::set <wchar_t> badChs = {',','|',';',':','*','-','`','+','_','&','#','%','@','^','(',')'};
+    for (auto& name : allNames) {
+        normalize_name(name);
+    }
+    return allNames;
 }
 
 void TableWorker::remove_bad_symbols(std::wstring &mail) {
@@ -50,22 +59,41 @@ void TableWorker::remove_bad_symbols(std::wstring &mail) {
 }
 
 void TableWorker::find_mail_struct(std::wstring &mail) {
-    if (mail.find('@') == std::wstring::npos) return;
-    std::wstring address,domain;
-    for (const auto& ch : mail){
-        if (ch == '@') break;
-        address += ch;
+    std::wstring address;
+    std::pair <int,std::wstring> realDomain = {1e9,mailsDomains.front()};
+    if (mail.find('@') == std::wstring::npos){
+        std::wstring suffix;
+        for (int i = (int)mail.size() - 1;i >= std::max(0,i - maxMailLen);i--){
+            suffix += mail[i];
+            std::reverse(suffix.begin(),suffix.end());
+            for (auto& domain : mailsDomains){
+                int dist = levenshtein_distance(suffix,domain);
+                if (dist < realDomain.first){
+                    realDomain = std::make_pair(dist,domain);
+                }
+            }
+            std::reverse(suffix.begin(),suffix.end());
+        }
+        for (int i = 0;i < (int)mail.size() - (int)realDomain.second.size();i++)
+            address += mail[i];
     }
-    for (int i = (int)mail.size() - 1; i >= 0;i--){
-        domain += mail[i];
-        if (mail[i] == '@') break;
-    }
-    std::reverse(domain.begin(),domain.end());
-    std::pair <int,std::wstring> realDomain = std::make_pair(1e9,domain);
-    for (const auto& domainPattern : mailsDomains){
-        int dist = levenshtein_distance(domain,domainPattern);
-        if (dist < realDomain.first){
-            realDomain = std::make_pair(dist,domainPattern);
+    else {
+        std::wstring domain;
+        for (const auto &ch: mail) {
+            if (ch == '@') break;
+            address += ch;
+        }
+        for (int i = (int) mail.size() - 1; i >= 0; i--) {
+            domain += mail[i];
+            if (mail[i] == '@') break;
+        }
+        std::reverse(domain.begin(), domain.end());
+        realDomain.second = domain;
+        for (const auto &domainPattern: mailsDomains) {
+            int dist = levenshtein_distance(domain, domainPattern);
+            if (dist < realDomain.first) {
+                realDomain = std::make_pair(dist, domainPattern);
+            }
         }
     }
     mail = address + realDomain.second;
@@ -88,6 +116,7 @@ int TableWorker::levenshtein_distance(const std::wstring &text,const std::wstrin
 }
 
 void TableWorker::read_mails(const std::string &path) {
+    maxMailLen = 0;
     std::wifstream mailsReader(path);
     if (!mailsReader.is_open()){
         throw std::runtime_error(path);
@@ -106,6 +135,49 @@ void TableWorker::read_mails(const std::string &path) {
         curMail += '@';
         std::reverse(curMail.begin(),curMail.end());
         mailsDomains.push_back(curMail);
+        maxMailLen = std::max(maxMailLen,(int)curMail.size());
         curMail.clear();
     }
+}
+
+std::vector<TableDataset1Data> TableWorker::get_dataset1(const std::string &tableName) {
+    std::vector <TableDataset1Data> data = ClickhouseManager::get_all_from1(config,tableName);
+    for (auto& [uid,full_name,email,address,sex,birthdate,phone] : data){
+        normalize_name(full_name);
+        normalize_mail(email);
+        normalize_phone(phone);
+    }
+    return data;
+}
+
+void TableWorker::normalize_name(std::wstring &name) {
+    std::set <wchar_t> badChs = {',','|',';',':','*','-','`','+','_','&','#','%','@','^','(',')'};
+    std::wstring normalName;
+    for (auto& ch : name) {
+        if ((ch >= '0' && ch <= '9') || badChs.find(ch) != badChs.end()) continue;
+        normalName += ch;
+    }
+    name = normalName;
+}
+
+void TableWorker::normalize_phone(std::wstring &phone) {
+    std::wstring realPhone;
+    for (const auto& ch : phone){
+        if (ch >= '0'&& ch <= '9') realPhone += ch;
+    }
+    if ((int)realPhone.size() == 11) {
+        phone = realPhone;
+        if (phone.front() == '7') phone.front() = '8';
+    }
+    else if ((int)realPhone.size() == 10){
+        std::reverse(realPhone.begin(),realPhone.end());
+        realPhone += '8';
+        std::reverse(realPhone.begin(),realPhone.end());
+        phone = realPhone;
+    }
+}
+
+void TableWorker::normalize_mail(std::wstring &mail) {
+    remove_bad_symbols(mail);
+    find_mail_struct(mail);
 }
