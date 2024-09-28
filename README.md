@@ -18,12 +18,19 @@
 
 <img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" align="center" height="680" width="912"></img><br>
 
-### Инструкция по сборке решение
-Для запуска решения требуется наличие хх
-Сборка выполняется в N действий:
-1. 
-2. 
-3. 
+### Инструкция по сборке решения
+Установка 
+```bash
+docker build -t solution
+```
+Клонирование репозитория
+```bash
+git clone https://github.com/limeparrot/ThereIsAnIdeaButNoProofs.git
+```
+Запуск созданияdocker-compose
+```bash
+docker-compose up
+```
 
 ### Описание работы кода
 Предобработка данных
