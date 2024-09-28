@@ -15,9 +15,9 @@
 <h2 align="center">Документация</h2>
 
 ### Диаграмма архитектуры
-Архитектура решения выглядит следующим образом
-![image](https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2)
-<img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" height="1024" width="1024"></img><br>
+<h3>Архитектура решения выглядит следующим образом</h3><br>
+
+<img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" align="center" height="680" width="912"></img><br>
 
 ### Инструкция по сборке решение
 Сборка выполняется в N действий:
