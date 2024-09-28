@@ -1,8 +1,6 @@
 <h1 align="center">IT INNO HACK</h1>
 <h2 align="center">Dynamic Record Linkage</h2>
 
-![Ubuntu](https://img.shields.io/badge/Ubuntu-FF5733?style=for-the-badge&logo=ubuntu&logoColor=ffdd54) ![ClickHouse](https://img.shields.io/badge/ClickHouse-FFFAFA?style=for-the-badge&logo=ClickHouse&logoColor=yellow) ![YandexCloud](https://img.shields.io/badge/C++-EAEEFF?style=for-the-badge&logo=cplusplus&logoColor=1945FF) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-
 <div align="center">
   
   <a href="">![Ubuntu](https://img.shields.io/badge/Ubuntu-FF5733?style=for-the-badge&logo=ubuntu&logoColor=ffdd54)</a>
@@ -12,7 +10,7 @@
   
 </div>
   
-<h2 align="center">Команда: Есть идея, но нет пруфов</h2>
+<h3 align="center">By «Есть идея, но нет пруфов»</h3>
 
 <h2 align="center">Документация</h2>
 
