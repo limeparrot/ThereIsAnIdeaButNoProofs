@@ -12,9 +12,12 @@ public:
     TableWorker(const Config &config);
     std::vector <std::wstring> get_normalized_mails(const std::string &tableName,
                                       const std::string &columnName);
-    std::wstring normalize_phone_number(const std::wstring& number);
-    std::wstring normalize_birth_date(const std::wstring& date);
-    std::wstring normalize_name(const std::wstring& name);
+    std::vector <std::wstring> get_normalized_phone_numbers(const std::string &tableName,
+                                                            const std::string &columnName);
+    std::vector <std::wstring> get_normalized_birth_dates(const std::string &tableName,
+                                           const std::string &columnName);
+    std::vector <std::wstring> get_normalized_names(const std::string &tableName,
+                                     const std::string &columnName);
 
 private:
     std::set <wchar_t> goodMailSymbols;

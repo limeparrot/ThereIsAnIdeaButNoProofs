@@ -11,7 +11,9 @@ public:
     std::vector <std::wstring> get_string(const Config &config,
                                           const std::string &tableName,
                                           const std::string &columnName);
-    //std::vector <std::wstring> run();
+    std::vector <clickhouse::ColumnUUID> get_uuid(const Config &config,
+                                                  const std::string &tableName,
+                                                  const std::string &columnName);
 
 private:
 

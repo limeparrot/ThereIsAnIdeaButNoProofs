@@ -20,9 +20,9 @@ int main(int argc, const char **argv) {
     TableWorker tableWorker(config);
     const std::string table = "table_dataset1",emailName = "email";
     std::vector <std::wstring> clearMails = tableWorker.get_normalized_mails(table,emailName);
-    for (const auto& mail : clearMails){
-        std::wcout << mail << "\n";
-    }
+//    for (const auto& mail : clearMails){
+//        std::wcout << mail << "\n";
+//    }
    // ClickhouseManager manager(config);
     //manager.run();
     //std::cout << config.get<int>("a", "a", 0) << '\n';

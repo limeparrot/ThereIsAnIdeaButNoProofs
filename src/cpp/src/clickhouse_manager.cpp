@@ -8,12 +8,12 @@ ClickhouseManager::ClickhouseManager() {}
 
 std::vector<std::wstring>
 ClickhouseManager::get_string(const Config &config, const std::string &tableName, const std::string &columnName) {
-    std::string address = config.get<std::string>("host","address","test.txt");
-    std::string login = config.get<std::string>("host","login","test.txt");
-    std::string password = config.get<std::string>("host","password","test.txt");
+    auto address = config.get<std::string>("host","address","test.txt");
+    auto login = config.get<std::string>("host","login","test.txt");
+    auto password = config.get<std::string>("host","password","test.txt");
     std::vector <std::wstring> result;
     std::stringstream ss;
-    ss << "SELECT " << columnName << " FROM " << tableName << " LIMIT 100";
+    ss << "SELECT " << columnName << " FROM " << tableName;
     std::string queryStr = ss.str();
     std::vector <std::wstring> mailsList;
     Client client(ClientOptions().SetHost(address).SetPort(9000).SetUser(login).SetPassword(password));
@@ -24,4 +24,9 @@ ClickhouseManager::get_string(const Config &config, const std::string &tableName
         }
     });
     return mailsList;
+}
+
+std::vector <clickhouse::ColumnUUID> ClickhouseManager::get_uuid(const Config &config, const std::string &tableName,
+                                                                 const std::string &columnName) {
+    return {};
 }
