@@ -17,7 +17,7 @@
 ### Диаграмма архитектуры
 Архитектура решения выглядит следующим образом
 ![image](https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2)
-<img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" height="500" width="835"></img><br>
+<img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" height="1024" width="1024"></img><br>
 
 ### Инструкция по сборке решение
 Сборка выполняется в N действий:
