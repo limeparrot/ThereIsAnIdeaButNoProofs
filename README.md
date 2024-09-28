@@ -6,6 +6,9 @@
 <div align="center">
   
   <a href="">![Ubuntu](https://img.shields.io/badge/Ubuntu-FF5733?style=for-the-badge&logo=ubuntu&logoColor=ffdd54)</a>
+  <a href="">![ClickHouse](https://img.shields.io/badge/ClickHouse-FFFAFA?style=for-the-badge&logo=ClickHouse&logoColor=yellow)</a>
+  <a href="">![YandexCloud](https://img.shields.io/badge/C++-EAEEFF?style=for-the-badge&logo=cplusplus&logoColor=1945FF)</a>
+  <a href="">![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)</a>
   
 </div>
   
