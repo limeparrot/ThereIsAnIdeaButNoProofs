@@ -1,4 +1,4 @@
-<h1 align="center">IT INNO HACK</h1>
+![image](https://github.com/user-attachments/assets/9d508785-752a-4949-9cea-522efb8db4a3)<h1 align="center">IT INNO HACK</h1>
 <h3 align="center">«Есть идея, но нет пруфов»</h3>
 <h2 align="center">Dynamic Record Linkage</h2>
 
@@ -15,7 +15,7 @@
 ##     Диаграмма архитектуры
 <h4>Архитектура решения выглядит следующим образом</h3><br>
 
-<img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" align="center" height="680" width="912"></img><br>
+<img src="https://github.com/user-attachments/assets/27b51906-c4a0-420a-84ca-36e68d2b0592" align="center" height="680" width="912"></img><br>
 
 ### Инструкция по сборке решения
 Установка 
