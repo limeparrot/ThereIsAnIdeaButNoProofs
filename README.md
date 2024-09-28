@@ -13,7 +13,7 @@
   
 <h2 align="center">Документация</h2>
 
-###     Диаграмма архитектуры
+##     Диаграмма архитектуры
 <h3>Архитектура решения выглядит следующим образом</h3><br>
 
 <img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" align="center" height="680" width="912"></img><br>
