@@ -11,7 +11,6 @@ TableWorker::TableWorker(const Config &config){
     }
     for (wchar_t ch = '0';ch <= '9';ch++) goodMailSymbols.insert(ch);
     goodMailSymbols.insert({'.','_','@','-'});
-    std::string path = config.get<std::string>("mail","path","path.txt");
     read_mails(config.get<std::string>("mail","path","path.txt"));
 }
 
@@ -88,7 +87,7 @@ int TableWorker::levenshtein_distance(const std::wstring &text,const std::wstrin
 void TableWorker::read_mails(const std::string &path) {
     std::wifstream mailsReader(path);
     if (!mailsReader.is_open()){
-        throw std::runtime_error("mail path");
+        throw std::runtime_error(path);
     }
     std::wstring mailsData;
     std::getline(mailsReader,mailsData);
