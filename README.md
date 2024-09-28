@@ -10,8 +10,7 @@
   <a href="">![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)</a>
   
 </div>
-  
-<h2 align="center">Документация</h2>
+
 
 ##     Диаграмма архитектуры
 <h4>Архитектура решения выглядит следующим образом</h3><br>
