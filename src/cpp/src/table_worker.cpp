@@ -5,32 +5,39 @@
 #include "table_worker.hpp"
 
 TableWorker::TableWorker(const Config &config){
+    this->config = config;
     for (wchar_t ch = 'a';ch <= 'z';ch++){
         goodMailSymbols.insert(ch); goodMailSymbols.insert(toupper(ch));
     }
     for (wchar_t ch = '0';ch <= '9';ch++) goodMailSymbols.insert(ch);
     goodMailSymbols.insert({'.','_','@','-'});
-    std::string path = config.get<std::string>("mail","path","path.txt");
     read_mails(config.get<std::string>("mail","path","path.txt"));
 }
 
-std::wstring TableWorker::normalize_mail(const std::wstring &mail) {
-    std::wstring normalMail = mail;
-    remove_bad_symbols(normalMail);
-    find_mail_struct(normalMail);
-    return normalMail;
+std::vector <std::wstring> TableWorker::get_normalized_mails(const std::string &tableName,
+                                               const std::string &columnName) {
+    ClickhouseManager clickhouseManager;
+    std::vector <std::wstring> mailsList = clickhouseManager.get_string(config,tableName,columnName);
+    for (auto& mail : mailsList){
+        remove_bad_symbols(mail);
+        find_mail_struct(mail);
+    }
+    return mailsList;
 }
 
-std::wstring TableWorker::normalize_phone_number(const std::wstring &number) {
-
+std::vector <std::wstring> TableWorker::get_normalized_phone_numbers(const std::string &tableName,
+                                                               const std::string &columName) {
+    return {};
 }
 
-std::wstring TableWorker::normalize_birth_date(const std::wstring &date) {
-
+std::vector <std::wstring> TableWorker::get_normalized_birth_dates(const std::string &tableName,
+                                                                   const std::string &columnName) {
+    return {};
 }
 
-std::wstring TableWorker::normalize_name(const std::wstring &name) {
-
+std::vector <std::wstring> TableWorker::get_normalized_names(const std::string &tableName,
+                                                             const std::string &columnName) {
+    return {};
 }
 
 void TableWorker::remove_bad_symbols(std::wstring &mail) {
@@ -83,7 +90,7 @@ int TableWorker::levenshtein_distance(const std::wstring &text,const std::wstrin
 void TableWorker::read_mails(const std::string &path) {
     std::wifstream mailsReader(path);
     if (!mailsReader.is_open()){
-        throw std::runtime_error("mail path");
+        throw std::runtime_error(path);
     }
     std::wstring mailsData;
     std::getline(mailsReader,mailsData);
@@ -96,6 +103,7 @@ void TableWorker::read_mails(const std::string &path) {
         curMail.pop_back();
         std::reverse(curMail.begin(),curMail.end());
         curMail.pop_back();
+        curMail += '@';
         std::reverse(curMail.begin(),curMail.end());
         mailsDomains.push_back(curMail);
         curMail.clear();
