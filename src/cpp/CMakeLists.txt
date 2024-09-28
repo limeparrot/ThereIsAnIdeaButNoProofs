@@ -17,7 +17,8 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 target_include_directories(${PROJECT_NAME} 
                            PRIVATE 3rdparty/clickhouse-cpp
-                           PRIVATE 3rdparty/clickhouse-cpp/contrlib/absi)
+                           PRIVATE 3rdparty/clickhouse-cpp/contrlib/absi
+                           PRIVATE 3rdparty/mINI/src)
 
 target_link_libraries(${PROJECT_NAME}
                       PRIVATE clickhouse-cpp-lib)
