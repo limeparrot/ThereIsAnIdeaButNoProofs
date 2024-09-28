@@ -1,5 +1,5 @@
-<h1 align="center">IT INNO HACK</h1><br><h3 align="center">«Есть идея, но нет пруфов»</h3>
-
+<h1 align="center">IT INNO HACK</h1>
+<h3 align="center">«Есть идея, но нет пруфов»</h3>
 <h2 align="center">Dynamic Record Linkage</h2>
 
 <div align="center">
@@ -20,10 +20,11 @@
 <img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" align="center" height="680" width="912"></img><br>
 
 ### Инструкция по сборке решение
+Для запуска решения требуется наличие хх
 Сборка выполняется в N действий:
-1.
-2.
-3.
+1. 
+2. 
+3. 
 
 ### Описание работы кода
 Предобработка данных
