@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/9d508785-752a-4949-9cea-522efb8db4a3)<h1 align="center">IT INNO HACK</h1>
+<h1 align="center">IT INNO HACK</h1>
 <h3 align="center">«Есть идея, но нет пруфов»</h3>
 <h2 align="center">Dynamic Record Linkage</h2>
 
