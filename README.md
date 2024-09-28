@@ -1,6 +1,4 @@
-<h1 align="center">IT INNO HACK</h1>
-<h2 align="center">Team»</h2>
-<h3 align="center">«Есть идея, но нет пруфов»</h3>
+<h1 align="center">IT INNO HACK</h1><br><h3 align="center">«Есть идея, но нет пруфов»</h3>
 
 <h2 align="center">Dynamic Record Linkage</h2>
 
