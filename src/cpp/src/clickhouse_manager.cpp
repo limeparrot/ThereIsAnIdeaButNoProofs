@@ -13,7 +13,7 @@ ClickhouseManager::get_string(const Config &config, const std::string &tableName
     auto password = config.get<std::string>("host","password","test.txt");
     std::vector <std::wstring> result;
     std::stringstream ss;
-    ss << "SELECT " << columnName << " FROM " << tableName;
+    ss << "SELECT " << columnName << " FROM " << tableName << " LIMIT 1000000";
     std::string queryStr = ss.str();
     std::vector <std::wstring> mailsList;
     Client client(ClientOptions().SetHost(address).SetPort(9000).SetUser(login).SetPassword(password));
