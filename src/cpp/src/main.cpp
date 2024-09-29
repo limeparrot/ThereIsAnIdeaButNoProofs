@@ -14,7 +14,7 @@ void clear_dataset1(const Config &config){
     auto csv = config.get<std::string>("files","csv1","text.txt");
     std::vector <TableDataset1Data> data = tableWorker.get_normalazied_dataset1(tableDataset1);
     for (const auto& [uid,fullName,email,address,sex,birthdate,phone] : data){
-        //write_dataset12(csv,uid,fullName,email,address,sex,birthdate,phone);
+        write_dataset12(csv,uid,fullName,email,address,sex,birthdate,phone);
     }
 }
 
@@ -24,7 +24,7 @@ void clear_datataset2(const Config &config){
     std::vector <TableDataset2Data> data = tableWorker.get_normalalized_dataset2(tableDataset2);
     auto csv = config.get<std::string>("files","csv2","text.txt");
     for (const auto& [uid,first_name,middle_name,last_name,birthdate,phone,address] : data){
-        //write_dataset12(csv,uid,first_name,middle_name,last_name,birthdate,phone,address);
+        write_dataset12(csv,uid,first_name,middle_name,last_name,birthdate,phone,address);
     }
 }
 
@@ -48,11 +48,11 @@ int main(int argc, const char **argv) {
     double start = clock();
     Config config(argv[1]);
     std::thread threadDataset1(clear_dataset1,config);
-    //std::thread threadDataset2(clear_datataset2,config);
-    //std::thread threadDataset3(clear_dataset3,config);
+    std::thread threadDataset2(clear_datataset2,config);
+    std::thread threadDataset3(clear_dataset3,config);
     threadDataset1.join();
-    //threadDataset2.join();
-    //threadDataset3.join();
+    threadDataset2.join();
+    threadDataset3.join();
     printf("%.4lf\n", (clock() - start) / CLOCKS_PER_SEC);
     return 0;
 }

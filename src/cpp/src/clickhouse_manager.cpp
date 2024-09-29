@@ -38,7 +38,7 @@ std::vector<TableDataset1Data> ClickhouseManager::get_dataset1(const Config &con
     std::vector <TableDataset1Data> data;
     client.Select(queryStr, [&](const Block &block) {
         for (int i = 0; i < block.GetRowCount(); i++) {
-            auto uid = block[0]->As<ColumnUUID>()->At(i);
+            std::wstring uid(block[0]->As<ColumnString>()->At(i).begin(),block[0]->As<ColumnString>()->At(i).end());
             std::wstring haveFIO(block[1]->As<ColumnString>()->At(i).begin(),
                                  block[1]->As<ColumnString>()->At(i).end());
             std::wstring haveMail(block[2]->As<ColumnString>()->At(i).begin(),
@@ -68,7 +68,7 @@ std::vector <TableDataset2Data> ClickhouseManager::get_dataset2(const Config &co
     std::vector <TableDataset2Data> data;
     client.Select(queryStr, [&](const Block &block) {
         for (int i = 0; i < block.GetRowCount(); i++) {
-            auto uid = block[0]->As<ColumnUUID>()->At(i);
+            std::wstring uid(block[0]->As<ColumnString>()->At(i).begin(),block[0]->As<ColumnString>()->At(i).end());
             std::wstring firstName(block[1]->As<ColumnString>()->At(i).begin(),
                                    block[1]->As<ColumnString>()->At(i).end());
             std::wstring middeName(block[2]->As<ColumnString>()->At(i).begin(),
@@ -98,7 +98,7 @@ std::vector <TableDataset3Data> ClickhouseManager::get_dataset3(const Config &co
     std::vector <TableDataset3Data> data;
     client.Select(queryStr, [&](const Block &block) {
         for (int i = 0; i < block.GetRowCount(); i++) {
-            auto uid = block[0]->As<ColumnUUID>()->At(i);
+            std::wstring uid(block[0]->As<ColumnString>()->At(i).begin(),block[0]->As<ColumnString>()->At(i).end());
             std::wstring name(block[1]->As<ColumnString>()->At(i).begin(),
                                    block[1]->As<ColumnString>()->At(i).end());
             std::wstring email(block[2]->As<ColumnString>()->At(i).begin(),

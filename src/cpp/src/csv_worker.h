@@ -17,7 +17,7 @@ bool file_exists(const std::string &fileName){
 template <typename filename, typename T1, typename T2, typename T3,typename T4,typename T5,typename T6,typename T7>
 bool write_dataset12(filename &fileName, T1 column1, T2 column2, T3 column3, T4 column4, T5 column5,T6 column6,T7 column7) {
     std::lock_guard<std::mutex> csvLock(logMutex);
-    std::fstream file;
+    std::wfstream file;
     file.open (fileName, std::ios::out | std::ios::app);
     if (file) {
         file << "\"" << column1 << "\",";
