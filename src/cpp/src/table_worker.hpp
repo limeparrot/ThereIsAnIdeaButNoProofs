@@ -10,16 +10,10 @@
 
 class TableWorker{
 public:
-    TableWorker(const Config &config);
-    std::vector <std::wstring> get_normalized_mails(const std::string &tableName,
-                                      const std::string &columnName);
-    std::vector <std::wstring> get_normalized_phone_numbers(const std::string &tableName,
-                                                            const std::string &columnName);
-    std::vector <std::wstring> get_normalized_birth_dates(const std::string &tableName,
-                                           const std::string &columnName);
-    std::vector <std::wstring> get_normalized_names(const std::string &tableName,
-                                     const std::string &columnName);
-    std::vector <TableDataset1Data> get_dataset1(const std::string &tableName);
+    explicit TableWorker(const Config &config);
+    std::vector <TableDataset1Data> get_normalazied_dataset1(const std::string &tableName);
+    std::vector <TableDataset2Data> get_normalalized_dataset2(const std::string &tableName);
+    std::vector <TableDataset3Data> get_normalazied_dataset3(const std::string &tableName);
 
 private:
     std::set <wchar_t> goodMailSymbols;

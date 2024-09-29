@@ -14,41 +14,6 @@ TableWorker::TableWorker(const Config &config){
     read_mails(config.get<std::string>("mail","path","path.txt"));
 }
 
-std::vector <std::wstring> TableWorker::get_normalized_mails(const std::string &tableName,
-                                               const std::string &columnName) {
-    std::vector <std::wstring> mailsList = ClickhouseManager::get_string(config,tableName,columnName);
-    for (auto& mail : mailsList){
-        normalize_mail(mail);
-    }
-    return mailsList;
-}
-
-std::vector <std::wstring> TableWorker::get_normalized_phone_numbers(const std::string &tableName,
-                                                               const std::string &columnName) {
-    std::vector <std::wstring> phoneNumberList = ClickhouseManager::get_string(config,tableName,columnName);
-    for (auto& phone : phoneNumberList){
-        normalize_phone(phone);
-    }
-    return phoneNumberList;
-}
-
-std::vector <std::wstring> TableWorker::get_normalized_birth_dates(const std::string &tableName,
-                                                                   const std::string &columnName) {
-    std::vector <std::wstring> birthDatesList = ClickhouseManager::get_string(config,tableName,columnName);
-
-    return {};
-}
-
-std::vector <std::wstring> TableWorker::get_normalized_names(const std::string &tableName,
-                                                             const std::string &columnName) {
-    std::vector <std::wstring> allNames = ClickhouseManager::get_string(config,tableName,columnName);
-    std::set <wchar_t> badChs = {',','|',';',':','*','-','`','+','_','&','#','%','@','^','(',')'};
-    for (auto& name : allNames) {
-        normalize_name(name);
-    }
-    return allNames;
-}
-
 void TableWorker::remove_bad_symbols(std::wstring &mail) {
     std::wstring newMail;
     for (const auto& ch : mail){
@@ -140,14 +105,22 @@ void TableWorker::read_mails(const std::string &path) {
     }
 }
 
-std::vector<TableDataset1Data> TableWorker::get_dataset1(const std::string &tableName) {
-    std::vector <TableDataset1Data> data = ClickhouseManager::get_all_from1(config,tableName);
+std::vector<TableDataset1Data> TableWorker::get_normalazied_dataset1(const std::string &tableName) {
+    std::vector <TableDataset1Data> data = ClickhouseManager::get_dataset1(config,tableName);
     for (auto& [uid,full_name,email,address,sex,birthdate,phone] : data){
         normalize_name(full_name);
         normalize_mail(email);
         normalize_phone(phone);
     }
     return data;
+}
+
+std::vector <TableDataset2Data> TableWorker::get_normalalized_dataset2(const std::string &tableName) {
+
+}
+
+std::vector <TableDataset3Data> TableWorker::get_normalazied_dataset3(const std::string &tableName) {
+
 }
 
 void TableWorker::normalize_name(std::wstring &name) {

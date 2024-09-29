@@ -6,42 +6,33 @@
 #include <thread>
 #include "table_worker.hpp"
 #include "internal_structs.h"
+#include "csv_worker.h"
 
 void clear_dataset1(const Config &config){
     TableWorker tableWorker(config);
     const std::string tableDataset1 = "table_dataset1";
-    const std::string emailColumn = "email";
-    const std::string phoneColumn = "phone";
-    const std::string FIOColumn = "full_name";
-    std::vector <TableDataset1Data> data = tableWorker.get_dataset1(tableDataset1);
-    std::cout << (int)data.size() << "\n";
-    //std::vector <std::wstring> clearMails = tableWorker.get_normalized_mails(tableDataset1,emailColumn);
-    //std::vector <std::wstring> clearPhoneNumbers = tableWorker.get_normalized_phone_numbers(tableDataset1,phoneColumn);
-    //std::vector <std::wstring> clearFIO = tableWorker.get_normalized_names(tableDataset1,FIOColumn);
-    //std::cout << (int)clearMails.size() << ' ' << (int)clearPhoneNumbers.size() << ' ' << (int)clearFIO.size() << "\n";
-    //std::vector <std::wstring> clearAllData =
+    auto csv = config.get<std::string>("files","csv1","text.txt");
+    std::vector <TableDataset1Data> data = tableWorker.get_normalazied_dataset1(tableDataset1);
+    for (const auto& [uid,fullName,email,address,sex,birthdate,phone] : data){
+        //write_dataset12(csv,uid,fullName,email,address,sex,birthdate,phone);
+    }
 }
 
 void clear_datataset2(const Config &config){
     TableWorker tableWorker(config);
     const std::string tableDataset2 = "table_dataset2";
-    const std::string firstNameColumn = "first_name";
-    const std::string middleNameColumn = "middle_name";
-    const std::string lastNameColumn = "last_name";
-    const std::string phoneColumn = "phone";
-    std::vector <std::wstring> clearFirstName = tableWorker.get_normalized_names(tableDataset2,firstNameColumn);
-    std::vector <std::wstring> clearMiddleName = tableWorker.get_normalized_names(tableDataset2,middleNameColumn);
-    std::vector <std::wstring> clearLastName = tableWorker.get_normalized_names(tableDataset2,lastNameColumn);
-    std::vector <std::wstring> clearPhoneNumber = tableWorker.get_normalized_phone_numbers(tableDataset2,phoneColumn);
+    std::vector <TableDataset2Data> data = tableWorker.get_normalalized_dataset2(tableDataset2);
+    auto csv = config.get<std::string>("files","csv2","text.txt");
+    for (const auto& [uid,first_name,middle_name,last_name,birthdate,phone,address] : data){
+        //write_dataset12(csv,uid,first_name,middle_name,last_name,birthdate,phone,address);
+    }
 }
 
 void clear_dataset3(const Config &config){
     TableWorker tableWorker(config);
     const std::string tableDataset3 = "table_dataset3";
-    const std::string nameColumn = "name";
-    const std::string emailColumn = "email";
-    std::vector <std::wstring> clearName = tableWorker.get_normalized_names(tableDataset3,nameColumn);
-    std::vector <std::wstring> clearEmail = tableWorker.get_normalized_mails(tableDataset3,emailColumn);
+    auto csv = config.get<std::string>("files","csv3","text.txt");
+    std::vector <TableDataset3Data> data = tableWorker.get_normalazied_dataset3(tableDataset3);
 }
 
 int main(int argc, const char **argv) {
@@ -54,8 +45,6 @@ int main(int argc, const char **argv) {
         std::printf("Usage: %s <config_file_name>", argv[0]);
         return 0;
     }
-    std::wstring pizdec = L"лалал";
-    //using convert_typeX = std::codecvt_utf8<wchar_t>;
     double start = clock();
     Config config(argv[1]);
     std::thread threadDataset1(clear_dataset1,config);
