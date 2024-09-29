@@ -23,6 +23,7 @@ def create_tables_for_clean_datasets(client):
 
 
 def fill_data_in_clean_datasets(client):
+    # TODO убрать тут лимит
     dataset1 = """
     INSERT INTO table_clean_dataset1
     WITH TRUNCATE
@@ -35,24 +36,40 @@ def fill_data_in_clean_datasets(client):
         birthdate,
         phone,
     FROM table_dataset1
-    LIMIT 5000000
+    LIMIT 7000000
     """
 
-    dataset2 = """
-    INSERT INTO table_clean_dataset2
-    WITH TRUNCATE
+    dt2 = """
     SELECT
         uid,
-        concat(middle_name, ' ', first_name, ' ', last_name) as full_name,
+        coalesce(if(first_name == 'Нет' or first_name == 'Отсутствует', Null, first_name), '') as first_name,
+        coalesce(if(middle_name == 'Нет' or middle_name == 'Отсутствует', Null, middle_name), '') as middle_name,
+        coalesce(if(last_name == 'Нет' or last_name == 'Отсутствует', Null, last_name), '') as last_name,
         null as email,
         address,
         null as sex,
         birthdate,
         phone,
-    FROM table_dataset2 
-    LIMIT 5000000
+    FROM table_dataset2
     """
 
+    # TODO убрать тут лимит
+    dataset2 = f"""
+    INSERT INTO table_clean_dataset2
+    WITH TRUNCATE
+    SELECT
+        uid,
+        trim(concat(middle_name, ' ', first_name, ' ', last_name)) as full_name,
+        null as email,
+        address,
+        null as sex,
+        birthdate,
+        phone,
+    FROM ({dt2})
+    LIMIT 7000000
+    """
+
+    # TODO убрать тут лимит
     dataset3 = """
     INSERT INTO table_clean_dataset3
     WITH TRUNCATE
@@ -65,7 +82,7 @@ def fill_data_in_clean_datasets(client):
         birthdate,
         null as phone
     FROM table_dataset3
-    LIMIT 5000000
+    LIMIT 7000000
     """
 
     client.command(
@@ -81,54 +98,7 @@ def fill_data_in_clean_datasets(client):
     )
 
 
-def checker(client: clickhouse_connect.driver.Client):
-    query = """
-        SELECT 
-            sum(tmp)
-        FROM (
-            SELECT 
-                1 as tmp
-            FROM
-                (
-                    SELECT * FROM table_clean_dataset1
-                    UNION ALL  
-                    SELECT * FROM table_clean_dataset2
-                    UNION ALL                
-                    SELECT * FROM table_clean_dataset3
-                )
-            GROUP BY full_name
-        )
-    """
-    data = client.query(query)
-    print("after group by", data.result_rows)
-    query = """
-        SELECT 
-            count(*)
-        FROM
-            (
-                SELECT * FROM table_clean_dataset1
-                UNION ALL  
-                SELECT * FROM table_clean_dataset2
-                UNION ALL                
-                SELECT * FROM table_clean_dataset3
-            )
-        """
-    data = client.query(query)
-    print("before group by", data.result_rows)
-
-
 def insert_result(client: clickhouse_connect.driver.Client):
-    create_table_result = """
-        CREATE OR REPLACE TABLE table_results (
-            id_is1 Array(UUID),
-            id_is2 Array(UUID),
-            id_is3 Array(UUID)
-        ) ENGINE = MergeTree()
-        ORDER BY id_is1;
-    """
-
-    client.command(create_table_result)
-
     select_base_data = """
         SELECT 
             uid,
@@ -167,13 +137,14 @@ def insert_result(client: clickhouse_connect.driver.Client):
         FROM table_clean_dataset3
     """
 
+    # TODO тут поставить full_name, email, phone
     pre_result = f"""
         SELECT 
             groupArray(to_ids) as ids
         FROM (
             {select_base_data}
         )
-        GROUP BY full_name
+        GROUP BY full_name, birthdate
     """
 
     result = f"""
@@ -186,23 +157,13 @@ def insert_result(client: clickhouse_connect.driver.Client):
         FROM ({pre_result})
     """
 
-    # print(pre_result)
-
-    # client.command(result)
-    client.query(result)
-
-    # print(*client.query("""
-    #     SELECT * FROM table_results LIMIT 100
-    # """).result_rows, sep="\n")
-    print(*client.query("""
-        SELECT count(*) FROM table_results
-    """).result_rows, sep='\n')
+    client.command(result)
 
 
 def main():
     start_time = time()
     client = clickhouse_connect.get_client(
-        host='localhost',
+        host='192.168.1.161',
         user='',
         password='',
         port=8123,

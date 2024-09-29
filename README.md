@@ -15,12 +15,12 @@
 ##     Диаграмма архитектуры
 <h4>Архитектура решения выглядит следующим образом</h3><br>
 
-<img src="https://github.com/user-attachments/assets/85ab7282-9261-4e4f-92ec-fb290cf8cca2" align="center" height="680" width="912"></img><br>
+<img src="https://github.com/user-attachments/assets/27b51906-c4a0-420a-84ca-36e68d2b0592" align="center" height="680" width="912"></img><br>
 
 ### Инструкция по сборке решения
 Установка 
 ```bash
-test
+docker build -t solution .
 ```
 Клонирование репозитория
 ```bash
