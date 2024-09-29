@@ -8,7 +8,7 @@
 #include <iostream>
 
 struct TableDataset1Data{
-    explicit TableDataset1Data(std::pair <uint64_t,uint64_t> uid_ = std::make_pair(INT_MAX,INT_MAX),
+    explicit TableDataset1Data(std::wstring uid_ = L"",
                                std::wstring full_name_ = L"",std::wstring email_ = L"",
                                std::wstring sex_ = L"",std::wstring address_ = L"",
                                std::wstring birthdate_ = L"",std::wstring phone_ = L"") :
@@ -16,7 +16,8 @@ struct TableDataset1Data{
                                sex(std::move(sex_)),birthdate(std::move(birthdate_)),phone(std::move(phone_)){
 
     }
-    std::pair <uint64_t,uint64_t> uid;
+   //std::pair <uint64_t,uint64_t> uid;
+    std::wstring uid;
     std::wstring full_name;
     std::wstring email;
     std::wstring address;
@@ -26,7 +27,7 @@ struct TableDataset1Data{
 };
 
 struct TableDataset2Data{
-    explicit TableDataset2Data(std::pair <uint64_t,uint64_t > uid_ = std::make_pair(INT_MAX,INT_MAX),
+    explicit TableDataset2Data(std::wstring uid_ = L"",
                                 std::wstring first_name_ = L"",std::wstring middle_name_ = L"",
                                 std::wstring last_name_ = L"",std::wstring birthdate_ = L"",
                                 std::wstring phone_ = L"",std::wstring address_ = L"") :
@@ -35,7 +36,8 @@ struct TableDataset2Data{
                                 address(std::move(address_)){
 
     }
-    std::pair <uint64_t,uint64_t> uid;
+//    std::pair <uint64_t,uint64_t> uid;
+    std::wstring uid;
     std::wstring first_name;
     std::wstring middle_name;
     std::wstring last_name;
@@ -45,7 +47,7 @@ struct TableDataset2Data{
 };
 
 struct TableDataset3Data{
-    explicit TableDataset3Data(std::pair <uint64_t,uint64_t> uid_ = std::make_pair(INT_MAX,INT_MAX),
+    explicit TableDataset3Data(std::wstring uid_ = L"",
                                std::wstring name_ = L"",std::wstring email_ = L"",
                                std::wstring birthdate_ = L"",std::wstring sex_ = L"") :
                                uid(std::move(uid_)),
@@ -53,7 +55,8 @@ struct TableDataset3Data{
                                birthdate(std::move(birthdate_)), sex(std::move(sex_)){
 
     }
-    std::pair <uint64_t,uint64_t> uid;
+//    std::pair <uint64_t,uint64_t> uid;
+    std::wstring uid;
     std::wstring name;
     std::wstring email;
     std::wstring birthdate;
