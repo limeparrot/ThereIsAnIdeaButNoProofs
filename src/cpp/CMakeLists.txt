@@ -12,7 +12,7 @@ add_subdirectory(3rdparty/clickhouse-cpp)
 set(SRC_FILES
 
   src/main.cpp
-        src/table_worker.cpp src/table_worker.hpp src/clickhouse_manager.cpp src/internal_structs.h)
+        src/table_worker.cpp src/table_worker.hpp src/clickhouse_manager.cpp src/internal_structs.h src/csv_worker.h)
 add_executable(${PROJECT_NAME} ${SRC_FILES}) 
 
 target_include_directories(${PROJECT_NAME} 
