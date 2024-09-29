@@ -33,6 +33,9 @@ void clear_dataset3(const Config &config){
     const std::string tableDataset3 = "table_dataset3";
     auto csv = config.get<std::string>("files","csv3","text.txt");
     std::vector <TableDataset3Data> data = tableWorker.get_normalazied_dataset3(tableDataset3);
+    for (const auto& [uid,name,email,birthdate,sex] : data){
+        write_dataset3(csv,uid,name,email,birthdate,sex);
+    }
 }
 
 int main(int argc, const char **argv) {

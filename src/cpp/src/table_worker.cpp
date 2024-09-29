@@ -116,11 +116,23 @@ std::vector<TableDataset1Data> TableWorker::get_normalazied_dataset1(const std::
 }
 
 std::vector <TableDataset2Data> TableWorker::get_normalalized_dataset2(const std::string &tableName) {
-
+    std::vector <TableDataset2Data> data = ClickhouseManager::get_dataset2(config,tableName);
+    for (auto& [uid,firstName,middleName,lastName,birthdate,phone,address] : data){
+        normalize_name(firstName);
+        normalize_name(middleName);
+        normalize_name(lastName);
+        normalize_phone(phone);
+    }
+    return data;
 }
 
 std::vector <TableDataset3Data> TableWorker::get_normalazied_dataset3(const std::string &tableName) {
-
+    std::vector <TableDataset3Data> data = ClickhouseManager::get_dataset3(config,tableName);
+    for (auto& [uid,name,email,birthdate,sex] : data){
+        normalize_name(name);
+        normalize_mail(email);
+    }
+    return data;
 }
 
 void TableWorker::normalize_name(std::wstring &name) {
