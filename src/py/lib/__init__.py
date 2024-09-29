@@ -23,7 +23,6 @@ def create_tables_for_clean_datasets(client):
 
 
 def fill_data_in_clean_datasets(client):
-    # TODO убрать тут лимит
     dataset1 = """
     INSERT INTO table_clean_dataset1
     WITH TRUNCATE
@@ -35,8 +34,7 @@ def fill_data_in_clean_datasets(client):
         sex,
         birthdate,
         phone,
-    FROM table_dataset1
-    LIMIT 7000000
+    FROM clean_dataset1
     """
 
     dt2 = """
@@ -50,10 +48,9 @@ def fill_data_in_clean_datasets(client):
         null as sex,
         birthdate,
         phone,
-    FROM table_dataset2
+    FROM clean_dataset2
     """
 
-    # TODO убрать тут лимит
     dataset2 = f"""
     INSERT INTO table_clean_dataset2
     WITH TRUNCATE
@@ -66,10 +63,8 @@ def fill_data_in_clean_datasets(client):
         birthdate,
         phone,
     FROM ({dt2})
-    LIMIT 7000000
     """
 
-    # TODO убрать тут лимит
     dataset3 = """
     INSERT INTO table_clean_dataset3
     WITH TRUNCATE
@@ -81,8 +76,7 @@ def fill_data_in_clean_datasets(client):
         sex,
         birthdate,
         null as phone
-    FROM table_dataset3
-    LIMIT 7000000
+    FROM clean_dataset3
     """
 
     client.command(
@@ -137,14 +131,13 @@ def insert_result(client: clickhouse_connect.driver.Client):
         FROM table_clean_dataset3
     """
 
-    # TODO тут поставить full_name, email, phone
     pre_result = f"""
         SELECT 
             groupArray(to_ids) as ids
         FROM (
             {select_base_data}
         )
-        GROUP BY full_name, birthdate
+        GROUP BY full_name, email, phone
     """
 
     result = f"""
@@ -163,10 +156,10 @@ def insert_result(client: clickhouse_connect.driver.Client):
 def main():
     start_time = time()
     client = clickhouse_connect.get_client(
-        host='192.168.1.161',
+        host='127.0.0.1',
         user='',
         password='',
-        port=8123,
+        port=9000,
     )
 
     print("Create tables")
